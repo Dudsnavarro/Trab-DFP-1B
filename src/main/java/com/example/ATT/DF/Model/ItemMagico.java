@@ -23,6 +23,23 @@ public class ItemMagico {
     public ItemMagico(String nome, TipoDeItem tipoDeItem, Long forca, Long defesa, Personagem personagem){
         this.nome = nome;
         this.tipoDeItem = tipoDeItem;
+
+        if (forca == null || defesa == null || (forca == 0 && defesa == 0))
+            throw new IllegalArgumentException("Item não pode ter força e defesa igual a zero.");
+
+        if (forca > 10 || defesa > 10)
+            throw new IllegalArgumentException("Força e Defesa não podem passar de 10.");
+
+        switch (tipoDeItem) {
+            case Arma -> {
+                if (defesa != 0)
+                    throw new IllegalArgumentException("As Armas devem ter defesa 0.");
+            }
+            case Armadura -> {
+                if (forca != 0)
+                    throw new IllegalArgumentException("As Armaduras devem ter forca 0.");
+            }
+        }
         this.forca = forca;
         this.defesa = defesa;
         this.personagem = personagem;
